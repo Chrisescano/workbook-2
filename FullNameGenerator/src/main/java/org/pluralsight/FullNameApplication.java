@@ -20,9 +20,17 @@ public class FullNameApplication {
         return scanner.nextLine().trim();
     }
 
+    public static String capitalizeFirstChar(String str) {
+        return Character.toUpperCase(str.charAt(0)) + str.substring(1);
+    }
+
     public static void printFormattedName(String firstName, String middleName, String lastName, String suffix) {
+        firstName = " " + capitalizeFirstChar(firstName);
+        lastName = " " + capitalizeFirstChar(lastName);
+
+        if(!middleName.isEmpty()) middleName = " " + capitalizeFirstChar(middleName);
         if(!suffix.isBlank()) suffix = ", " + suffix;
 
-        System.out.printf("Full Name: %s %s %s %s", firstName, middleName, lastName, suffix);
+        System.out.printf("Full Name:%s%s%s%s", firstName, middleName, lastName, suffix);
     }
 }
