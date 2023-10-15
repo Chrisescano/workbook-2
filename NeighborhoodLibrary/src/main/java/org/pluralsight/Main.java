@@ -98,8 +98,9 @@ public class Main {
 
     public static void checkOutBook(String bookInfo) {
         //assumes bookInfo string has <char> <book title/id/isbn>
-        String[] tokens = bookInfo.split(" ", 2);
+        String[] tokens = bookInfo.split(" ", 2); //splits string on first occurrence of " "
 
+        //checks out book based on title id or isbn
         for(int i = 0; i < currentAvailableBooks; i++) {
             Book book = libraryCollection[i];
             if (
@@ -117,6 +118,7 @@ public class Main {
         //assumes bookInfo string has <char> <book id>
         String[] tokens = bookInfo.split(" ");
 
+        //checks in book based on id
         for(int i = 0; i < currentAvailableBooks; i++) {
             Book book = libraryCollection[i];
             if(String.valueOf(book.getId()).equalsIgnoreCase(tokens[1])) {
