@@ -25,6 +25,11 @@ public class Book {
         isCheckedOut = false;
     }
 
+    @Override
+    public String toString() {
+        return "Title: " + title + " | ID: " + id + " | ISBN: " + isbn;
+    }
+
     /*-----Getters/Setters-----*/
     public int getId() {
         return id;
