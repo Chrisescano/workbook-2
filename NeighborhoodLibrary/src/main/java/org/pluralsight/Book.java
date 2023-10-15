@@ -8,15 +8,21 @@ public class Book {
     private String title;
     private String checkedOutTo;
 
-
+    Book(int id, String isbn, String title) {
+        this.id = id;
+        this.isbn = isbn;
+        this.title = title;
+    }
 
     /*-----Functions-----*/
     public void checkOut(String name) {
-
+        checkedOutTo = name;
+        isCheckedOut = true;
     }
 
     public void checkIn() {
-
+        checkedOutTo = "";
+        isCheckedOut = false;
     }
 
     /*-----Getters/Setters-----*/
