@@ -7,11 +7,13 @@ public class Main {
     static Book[] libraryCollection = new Book[20];
     static int currentAvailableBooks = 5;
 
-    static String homeScreenPrompt = "Here is what you can do:\n  (A) - Shows available books\n  (C) - Shows checked out books\n" +
+    static String homeScreenPrompt = "\nHere is what you can do:\n  (A) - Shows available books\n  (C) - Shows checked out books\n" +
             "  (Q) - Quit the program\nType in your command: ";
-    static String availableBooksPrompt = "Here is what you can do:\n  (C) - Check out book\n    if Checking-out: type <book-name> OR <book-isbn> OR <book-id>" +
+    static String availableBooksPrompt = "\nHere is what you can do:\n  (C) - Check out book\n    if checking-out type: C <book-name> OR <book-isbn> OR <book-id>" +
             "\n  (R) - Return back to main menu\nType in your command: ";
-    static String enterNamePrompt = "Please enter your name: ";
+    static String enterNamePrompt = "\nPlease enter your name: ";
+    static String checkedOutMenuPrompt = "\nHere is what you can do:\n  (C) - To check in a book\n    if checking-in type: C <book-id>" +
+            "\n  (X) - Return back to main menu\nType in your command: ";
 
     public static void main(String[] args) {
         //making up books
@@ -33,7 +35,7 @@ public class Main {
                     availableBooksMenu();
                     break;
                 case 'C':
-                    System.out.println("Show checked out books...");
+                    showCheckedOutBooksMenu();
                     break;
                 case 'Q':
                     System.out.println("Quitting the program");
@@ -71,6 +73,7 @@ public class Main {
     }
 
     public static void checkOutBook(String bookInfo) {
+        //assumes bookInfo string has <char> <book title/id/isbn>
         String[] tokens = bookInfo.split(" ");
 
         for(int i = 0; i < currentAvailableBooks; i++) {
@@ -82,6 +85,30 @@ public class Main {
             ) {
                 String name = getStringInput(scanner, enterNamePrompt);
                 libraryCollection[i].checkOut(name);
+            }
+        }
+    }
+
+    public static void showCheckedOutBooksMenu() {
+        System.out.println("Here is a list of all the books that are checked out:");
+        //listing checked-out books
+        for(int i = 0 ; i < currentAvailableBooks; i++) {
+            if(libraryCollection[i].isCheckedOut()) {
+                System.out.println(libraryCollection[i] + " - Checked out to: " + libraryCollection[i].getCheckedOutTo());
+            }
+        }
+
+        while(true) {
+            String command = getStringInput(scanner, checkedOutMenuPrompt);
+            switch (command.toUpperCase().charAt(0)) {
+                case 'C':
+                    System.out.println("Checking in book...");
+                    break;
+                case 'X':
+                    System.out.println("Returning to main menu...");
+                    return;
+                default:
+                    System.out.println("Sorry, that is not a valid command - type: C or X");
             }
         }
     }
