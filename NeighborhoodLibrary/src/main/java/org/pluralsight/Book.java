@@ -12,6 +12,8 @@ public class Book {
         this.id = id;
         this.isbn = isbn;
         this.title = title;
+        isCheckedOut = false;
+        checkedOutTo = "";
     }
 
     /*-----Functions-----*/
@@ -27,7 +29,7 @@ public class Book {
 
     @Override
     public String toString() {
-        return "Title: " + title + " | ID: " + id + " | ISBN: " + isbn;
+        return "Title: \"" + title + "\" | ID: " + id + " | ISBN: " + isbn;
     }
 
     /*-----Getters/Setters-----*/

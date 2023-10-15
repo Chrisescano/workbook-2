@@ -38,11 +38,11 @@ public class Main {
                     showCheckedOutBooksMenu();
                     break;
                 case 'Q':
-                    System.out.println("Quitting the program");
+                    System.out.println("\nQuitting the program");
                     isDone = true;
                     break;
                 default:
-                    System.out.println("Sorry, that is not a valid command - type: A, C, or Q");
+                    System.out.println("\nSorry, that is not a valid command - type: A, C, or Q");
             }
         }
     }
@@ -64,27 +64,10 @@ public class Main {
                     checkOutBook(command);
                     break;
                 case 'R':
-                    System.out.println("Returning to main menu...");
+                    System.out.println("\nReturning to main menu...");
                     return;
                 default:
-                    System.out.println("Sorry, that is not a valid command - type: S or R");
-            }
-        }
-    }
-
-    public static void checkOutBook(String bookInfo) {
-        //assumes bookInfo string has <char> <book title/id/isbn>
-        String[] tokens = bookInfo.split(" ");
-
-        for(int i = 0; i < currentAvailableBooks; i++) {
-            Book book = libraryCollection[i];
-            if (    //will check title first, then id, then isbn
-                    book.getTitle().equalsIgnoreCase(tokens[1]) ||
-                    String.valueOf(book.getId()).equalsIgnoreCase(tokens[1]) ||
-                    book.getIsbn().equalsIgnoreCase(tokens[1])
-            ) {
-                String name = getStringInput(scanner, enterNamePrompt);
-                libraryCollection[i].checkOut(name);
+                    System.out.println("\nSorry, that is not a valid command - type: S or R");
             }
         }
     }
@@ -102,13 +85,42 @@ public class Main {
             String command = getStringInput(scanner, checkedOutMenuPrompt);
             switch (command.toUpperCase().charAt(0)) {
                 case 'C':
-                    System.out.println("Checking in book...");
-                    break;
+                    checkInBooks(command);
+                    return;
                 case 'X':
-                    System.out.println("Returning to main menu...");
+                    System.out.println("\nReturning to main menu...");
                     return;
                 default:
-                    System.out.println("Sorry, that is not a valid command - type: C or X");
+                    System.out.println("\nSorry, that is not a valid command - type: C or X");
+            }
+        }
+    }
+
+    public static void checkOutBook(String bookInfo) {
+        //assumes bookInfo string has <char> <book title/id/isbn>
+        String[] tokens = bookInfo.split(" ", 2);
+
+        for(int i = 0; i < currentAvailableBooks; i++) {
+            Book book = libraryCollection[i];
+            if (
+                    book.getTitle().equalsIgnoreCase(tokens[1]) ||
+                    String.valueOf(book.getId()).equalsIgnoreCase(tokens[1]) ||
+                    book.getIsbn().equalsIgnoreCase(tokens[1])
+            ) {
+                String name = getStringInput(scanner, enterNamePrompt);
+                libraryCollection[i].checkOut(name);
+            }
+        }
+    }
+
+    public static void checkInBooks(String bookInfo) {
+        //assumes bookInfo string has <char> <book id>
+        String[] tokens = bookInfo.split(" ");
+
+        for(int i = 0; i < currentAvailableBooks; i++) {
+            Book book = libraryCollection[i];
+            if(String.valueOf(book.getId()).equalsIgnoreCase(tokens[1])) {
+                libraryCollection[i].checkIn();
             }
         }
     }
